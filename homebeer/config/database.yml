@@ -13,13 +13,13 @@ default: &default
   password: 1
 
 development:
-  <<: *default
+  url: mysql2://fwbwhi5hwjlm90a4:m3wog3dxvljjhsle@nr84dudlpkazpylz.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/hufsjtg5em9mu0pa
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
+  url: mysql2://fwbwhi5hwjlm90a4:m3wog3dxvljjhsle@nr84dudlpkazpylz.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/hufsjtg5em9mu0pa
 
 production:
-  <<: *default
+  url: mysql2://fwbwhi5hwjlm90a4:m3wog3dxvljjhsle@nr84dudlpkazpylz.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/hufsjtg5em9mu0pa
