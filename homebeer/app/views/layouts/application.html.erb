@@ -6,20 +6,137 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-<div class="wrapper">
-	<div class="left-menu">
-	  <a class="logo">Homebeer</a>
-	  <a class="left-menu-item" href="#">Что нового?</a>
-	  <a class="left-menu-item">Каталог</a>
-	  <a class="left-menu-item">Блог</a>
-	  <a class="left-menu-item">Информация</a>
-	</div>
-	<div class="main-image">
+<body class="push-body">
+	<nav class="push-navbar" id="push-navbar-s1">
+		<button id="showLeftPush" class="c-hamburger c-hamburger--htx" >
+	  		<span>toggle menu</span>
+		</button>
+		<h2>BEER</h2>
+		<ul class="menu-links">
+		  <li><a href='#'>
+		  	<span>Что нового?</span>
+		  	<i class="fa fa-home" aria-hidden="true"></i>
+		  </a></li>
+		  <li><a href='#'>
+		  	<span>Каталог</span>
+			<i class="fa fa-book" aria-hidden="true"></i>
+		  </a></li>
+		  <li><a href='#'>
+		  	<span>Блог</span>
+		  	<i class="fa fa-folder-open" aria-hidden="true"></i>
+		  </a></li>
+		  <li><a href='#'>
+		  	<span>Информация</span>
+		  	<i class="fa fa-info-circle" aria-hidden="true"></i>
+		  </a></li>
+		</ul>
+	</nav>
+	<%= yield %>
 
-	</div>
-</div>
-<%= yield %>
 
+
+
+<script>
+		//======== Navigation Push ========
+		var menuLeft = document.getElementById( 'push-navbar-s1' ),
+			showLeftPush = document.getElementById( 'showLeftPush' ),
+			body = document.body;
+		showLeftPush.onclick = function() {
+			classie.toggle( this, 'active' );
+			classie.toggle( body, 'push-body-toright' );
+			classie.toggle( menuLeft, 'push-navbar-open' );
+		};
+
+		//======== c-hamburger ========
+		(function() {
+
+		  "use strict";
+
+		  var toggles = document.querySelectorAll(".c-hamburger");
+
+		  for (var i = toggles.length - 1; i >= 0; i--) {
+		    var toggle = toggles[i];
+		    toggleHandler(toggle);
+		  };
+
+		  function toggleHandler(toggle) {
+		    toggle.addEventListener( "click", function(e) {
+		      e.preventDefault();
+		      (this.classList.contains("is-active") === true) ? this.classList.remove("is-active") : this.classList.add("is-active");
+		    });
+		  }
+
+		})();
+
+        //======== ACCORDION ========
+        //uses classList, setAttribute, and querySelectorAll
+        //if you want this to work in IE8/9 youll need to polyfill these
+        (function(){
+            var d = document,
+            accordionToggles = d.querySelectorAll('.js-accordionTrigger'),
+            setAria,
+            setAccordionAria,
+            switchAccordion,
+          touchSupported = ('ontouchstart' in window),
+          pointerSupported = ('pointerdown' in window);
+          
+          skipClickDelay = function(e){
+            e.preventDefault();
+            e.target.click();
+          }
+
+                setAriaAttr = function(el, ariaType, newProperty){
+                el.setAttribute(ariaType, newProperty);
+            };
+            setAccordionAria = function(el1, el2, expanded){
+                switch(expanded) {
+              case "true":
+                setAriaAttr(el1, 'aria-expanded', 'true');
+                setAriaAttr(el2, 'aria-hidden', 'false');
+                break;
+              case "false":
+                setAriaAttr(el1, 'aria-expanded', 'false');
+                setAriaAttr(el2, 'aria-hidden', 'true');
+                break;
+              default:
+                        break;
+                }
+            };
+        //function
+        switchAccordion = function(e) {
+            e.preventDefault();
+            var thisAnswer = e.target.parentNode.nextElementSibling;
+            var thisQuestion = e.target;
+            if(thisAnswer.classList.contains('is-collapsed')) {
+                setAccordionAria(thisQuestion, thisAnswer, 'true');
+            } else {
+                setAccordionAria(thisQuestion, thisAnswer, 'false');
+            }
+            thisQuestion.classList.toggle('is-collapsed');
+            thisQuestion.classList.toggle('is-expanded');
+                thisAnswer.classList.toggle('is-collapsed');
+                thisAnswer.classList.toggle('is-expanded');
+            
+            thisAnswer.classList.toggle('animateIn');
+            };
+            for (var i=0,len=accordionToggles.length; i<len; i++) {
+                if(touchSupported) {
+              accordionToggles[i].addEventListener('touchstart', skipClickDelay, false);
+            }
+            if(pointerSupported){
+              accordionToggles[i].addEventListener('pointerdown', skipClickDelay, false);
+            }
+            accordionToggles[i].addEventListener('click', switchAccordion, false);
+          }
+        })();
+
+	</script>
+
+	<!-- Map -->
+	<script type="text/javascript">$('.map-toggle .switch').click(function() {
+        $(this).closest('.contact').toggleClass('toggle-active');
+        $(this).toggleClass('toggle-active');
+    });
+    </script>
 </body>
 </html>
